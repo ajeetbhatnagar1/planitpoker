@@ -9,6 +9,15 @@
 <body>
     <div class="container">
         <h1>Planning Poker</h1>
+
+        <!-- User Name Input -->
+        <div class="name-input">
+            <label for="username">Enter Your Name:</label>
+            <input type="text" id="username" placeholder="Your name">
+            <button id="join-button">Join</button>
+        </div>
+
+        <!-- Card Container -->
         <div class="card-container">
             <button class="card" data-value="1">1</button>
             <button class="card" data-value="2">2</button>
@@ -21,4 +30,20 @@
             <button class="card" data-value="55">55</button>
             <button class="card" data-value="89">89</button>
         </div>
-        <div class="
+
+        <!-- Selected Value Display -->
+        <div class="selected-value">
+            <h2>Selected Value: <span id="selected-value">None</span></h2>
+            <button id="toggle-show-hide">Show Details</button>
+            <div id="details" class="details hidden">
+                <p>Your Name: <span id="user-name">Not Joined</span></p>
+                <p>Selected Story Point: <span id="story-point">None</span></p>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submit-vote" disabled>Submit Vote</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
