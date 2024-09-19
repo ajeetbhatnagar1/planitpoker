@@ -3,62 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planning Poker</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Survey Modal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Planning Poker</h1>
 
-        <!-- User Name Input -->
-        <div class="name-input">
-            <label for="username">Enter Your Name:</label>
-            <input type="text" id="username" placeholder="Your name">
-            <button id="join-button">Join</button>
-        </div>
+    <button id="openModal">Take the Survey</button>
 
-        <!-- Card Container -->
-        <div class="card-container">
-            <button class="card" data-value="1">1</button>
-            <button class="card" data-value="2">2</button>
-            <button class="card" data-value="3">3</button>
-            <button class="card" data-value="5">5</button>
-            <button class="card" data-value="8">8</button>
-            <button class="card" data-value="13">13</button>
-            <button class="card" data-value="21">21</button>
-            <button class="card" data-value="34">34</button>
-            <button class="card" data-value="55">55</button>
-            <button class="card" data-value="89">89</button>
-        </div>
-
-        <!-- Selected Value Display -->
-        <div class="selected-value">
-            <h2>Selected Value: <span id="selected-value">None</span></h2>
-            <button id="toggle-show-hide">Show Details</button>
-            <div id="details" class="details hidden">
-                <p>Your Name: <span id="user-name">Not Joined</span></p>
-                <p>Selected Story Point: <span id="story-point">None</span></p>
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button id="submit-vote" disabled>Submit Vote</button>
-
-        <!-- Joined Users Table -->
-        <div class="joined-users">
-            <h2>Users Who Joined:</h2>
-            <table id="users-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- User rows will be added here dynamically -->
-                </tbody>
-            </table>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="surveyFrame" src="" width="100%" height="400px" frameborder="0"></iframe>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("openModal");
+        const span = document.getElementsByClassName("close")[0];
+        const surveyFrame = document.getElementById("surveyFrame");
+
+        btn.onclick = function() {
+            surveyFrame.src = 'https://www.surveymonkey.com/r/CESTransact?AccountID=[AccountID_value]&ContactID=[ContactID_value]'; // Replace with actual values
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+            surveyFrame.src = ""; // Clear the iframe source to stop the survey
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                surveyFrame.src = ""; // Clear the iframe source to stop the survey
+            }
+        }
+    </script>
+
 </body>
 </html>
