@@ -79,6 +79,7 @@
         btn.onclick = function() {
             surveyFrame.src = 'https://www.surveymonkey.com/r/CESTransact?AccountID=[AccountID_value]&ContactID=[ContactID_value]'; // Replace with actual values
             modal.style.display = "block";
+            checkSurveySubmission();
         }
 
         span.onclick = function() {
@@ -91,6 +92,24 @@
                 modal.style.display = "none";
                 surveyFrame.src = ""; // Clear the iframe source to stop the survey
             }
+        }
+
+        function checkSurveySubmission() {
+            const originalSrc = surveyFrame.src;
+            const interval = setInterval(() => {
+                try {
+                    const currentSrc = surveyFrame.contentWindow.location.href;
+
+                    // Check if the URL indicates a thank you page or similar
+                    if (currentSrc !== originalSrc && currentSrc.includes('thankyou')) {
+                        modal.style.display = "none"; // Close modal
+                        surveyFrame.src = ""; // Clear the iframe source
+                        clearInterval(interval); // Stop checking
+                    }
+                } catch (e) {
+                    // Ignore cross-origin errors
+                }
+            }, 1000); // Check every second
         }
     </script>
 
