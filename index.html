@@ -3,32 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SurveyMonkey Widget</title>
-    <script>
-        (function(t,e,s,o){
-            var n,c,l;
-            t.SMCX=t.SMCX||[],
-            e.getElementById(o) || 
-            (n=e.getElementsByTagName(s),
-            c=n[n.length-1],
-            l=e.createElement(s),
-            l.type="text/javascript",
-            l.async=!0,
-            l.id=o,
-            l.src="https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgd1dFyoSzl_2BM_2BPY8Q83FxM3X7odizVw9rIiTHoNpJa0bO.js",
-            c.parentNode.insertBefore(l,c));
-        })(window,document,"script","smcx-sdk");
-    </script>
+    <title>Survey Modal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Our Survey</h1>
-    <p>Please participate in our survey by clicking the button below:</p>
-    <button id="start-survey">Start Survey</button>
-    
+
+    <button id="openModal">Take the Survey</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="surveyFrame" src="" width="100%" height="400px" frameborder="0"></iframe>
+        </div>
+    </div>
+
     <script>
-        document.getElementById('start-survey').onclick = function() {
-            // Additional code can be added here to handle survey interactions if needed
-        };
+        const modal = document.getElementById("myModal");
+        const btn = document.getElementById("openModal");
+        const span = document.getElementsByClassName("close")[0];
+        const surveyFrame = document.getElementById("surveyFrame");
+
+        btn.onclick = function() {
+            surveyFrame.src = 'https://www.surveymonkey.com/r/CESTransact?AccountID=[AccountID_value]&ContactID=[ContactID_value]'; // Replace with actual values
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+            surveyFrame.src = ""; // Clear the iframe source to stop the survey
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                surveyFrame.src = ""; // Clear the iframe source to stop the survey
+            }
+        }
     </script>
+
 </body>
 </html>
